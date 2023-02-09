@@ -1,0 +1,27 @@
+name: CI
+
+on: push
+
+jobs:
+  build:
+    name: "Build and Release"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v2
+      - name: Install requirements.txt
+        run: |
+          pip3 install pytest pytest-cov
+      - name: Run tests
+        run: |
+          echo "Hi!!!!!!!!!"
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install serverless
+        run: npm install -g serverless serverless-python-requirements
+      - name: Deploy Production
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: echo "Hey!!!!!!!"
